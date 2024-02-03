@@ -68,6 +68,7 @@
       }
     ],
     "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/no-unsafe-enum-comparison": "off",
     "@typescript-eslint/no-empty-interface": "warn",
     "@typescript-eslint/no-empty-function": "warn",
     "@typescript-eslint/no-unused-vars": "warn",
@@ -82,10 +83,6 @@
     "@typescript-eslint/no-unnecessary-condition": [
       "error",
       { "allowConstantLoopConditions": true }
-    ],
-    "@typescript-eslint/no-magic-numbers": [
-      "error",
-      { "ignore": [0, 1], "ignoreArrayIndexes": true, "ignoreEnums": true }
     ],
     "@typescript-eslint/return-await": ["error", "always"],
     "react/react-in-jsx-scope": "off",

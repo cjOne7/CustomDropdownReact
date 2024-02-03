@@ -1,10 +1,11 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import { Stack, StackProps, Typography } from "@mui/material";
-import { ReactElement, useEffect, useState } from "react";
+import { Stack, StackProps, Typography, useTheme } from "@mui/material";
+import React, { ReactElement, useEffect, useState } from "react";
 
 import ReactIconSvg from "../assets/react.svg?react";
-import { textOverflow } from "./dropdownStyles.ts";
+import { KeyEvent } from "../models/globalModels.ts";
+import { BORDER_ROUND_RADIUS, textOverflow } from "./dropdownStyles.ts";
 
 interface DropdownValue {
   value: string;
@@ -21,12 +22,15 @@ export interface DropdownProps {
 }
 
 export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
+  const theme = useTheme();
+  const { pxToRem } = theme.typography;
   const { options, value, onValueChange, mainPlaceholder, ...stackProps } = props;
   const { sx, ...otherStackProps } = stackProps;
-  const [isMenuShown, setIsMenuShown] = useState<boolean>(false);
+  const [isMenuShown, setIsMenuShown] = useState<boolean>(true);
   const [selectedValue, setSelectedValue] = useState<DropdownProps["value"]>(value);
 
-  const handleMenuClick = (): void => {
+  const handleMenuClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+    e.stopPropagation();
     setIsMenuShown(!isMenuShown);
   };
 
@@ -38,6 +42,34 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
     return text ?? mainPlaceholder;
   };
 
+  const handleItemClick = (
+    e: React.MouseEvent<HTMLDivElement>,
+    newValue: DropdownValue["value"],
+  ): void => {
+    e.stopPropagation();
+    onValueChange(newValue);
+    setSelectedValue(newValue);
+  };
+
+  useEffect(() => {
+    const handleClickClose = (): void => {
+      setIsMenuShown(false);
+    };
+
+    const handleButtonDownClose = (e: KeyboardEvent): void => {
+      if (e.code === KeyEvent.ESCAPE) {
+        setIsMenuShown(false);
+      }
+    };
+
+    window.addEventListener("click", handleClickClose);
+    window.addEventListener("keydown", handleButtonDownClose);
+    return () => {
+      window.removeEventListener("click", handleClickClose);
+      window.removeEventListener("keydown", handleButtonDownClose);
+    };
+  }, []);
+
   useEffect(() => {
     setSelectedValue(value);
   }, [value]);
@@ -48,8 +80,8 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
         position: "relative",
         width: "100%",
         alignItems: "center",
-        borderRadius: "25px",
-        background: "linear-gradient(90deg, rgba(108,242,158,1) 0%, rgba(143,211,244,1) 100%)",
+        borderRadius: `${BORDER_ROUND_RADIUS} ${BORDER_ROUND_RADIUS} ${isMenuShown ? 0 : BORDER_ROUND_RADIUS} ${isMenuShown ? 0 : BORDER_ROUND_RADIUS}`,
+        background: "linear-gradient(90deg, #f0a3f6 0%, #8ab2f6 50%, #8fd3f4 100%)",
         ...sx,
       }}
       {...otherStackProps}
@@ -60,20 +92,20 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
           alignItems: "center",
           justifyContent: "space-between",
           overflow: "hidden",
-          borderRadius: "25px",
-          p: "10px 15px",
+          borderRadius: BORDER_ROUND_RADIUS,
+          p: `${pxToRem(10)} ${pxToRem(15)}`,
           width: "inherit",
-          color: isMenuShown ? "#7dabf5" : "#f1f2f2",
+          color: "#fff",
           "&:hover": {
             cursor: "pointer",
-            color: "white",
+            color: "#e1faff",
           },
         }}
         onClick={handleMenuClick}
       >
         <Stack
           direction="row"
-          spacing="10px"
+          spacing={pxToRem(10)}
           sx={{
             alignItems: "center",
             minWidth: 0,
@@ -105,37 +137,56 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
       <Stack
         sx={{
           width: "inherit",
-          alignItems: "center",
-          justifyContent: "center",
-          display: isMenuShown ? "block" : "none",
-          borderRadius: "25px",
-          p: "12px",
-          pt: 0,
+          position: "absolute",
+          top: "calc(100%)",
+          background: "linear-gradient(90deg, #f0a3f6 0%, #8ab2f6 50%, #8fd3f4 100%)",
+          borderRadius: `0 0 ${BORDER_ROUND_RADIUS} ${BORDER_ROUND_RADIUS}`,
         }}
-        spacing="5px"
       >
-        {options.map((option) => (
-          <Stack
-            key={option.value}
-            sx={{
-              // width: "inherit",
-              borderRadius: "25px",
-              p: "10px 15px",
-              bgcolor: "white",
-              borderTop: "none",
-              cursor: "pointer",
-              boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.64)",
-            }}
-            onClick={() => {
-              onValueChange(option.value);
-              setSelectedValue(option.value);
-            }}
-          >
-            <Typography variant="body1" title={option.text} sx={textOverflow()}>
-              {option.text}
-            </Typography>
-          </Stack>
-        ))}
+        <Stack
+          sx={{
+            width: "inherit",
+            alignItems: "center",
+            justifyContent: "center",
+            display: isMenuShown ? "block" : "none",
+            p: pxToRem(12),
+            pt: 0,
+          }}
+          spacing="5px"
+        >
+          {options.map(({ icon, text, value }) => (
+            <Stack
+              key={value}
+              sx={{
+                borderRadius: BORDER_ROUND_RADIUS,
+                p: `${pxToRem(10)} ${pxToRem(15)}`,
+                bgcolor: value === selectedValue ? "#b6f3ff" : "#fff",
+                borderTop: "none",
+                cursor: "pointer",
+                boxShadow: "0px 2px 6px 1px rgba(0, 0, 0, 0.66)",
+                fontWeight: value === selectedValue ? "bold" : "normal",
+                "&:hover": {
+                  bgcolor: value === selectedValue ? "#b6f3ff" : "#e1faff",
+                },
+              }}
+              onClick={(e) => handleItemClick(e, value)}
+            >
+              <Stack direction="row" spacing={pxToRem(10)} alignItems="center">
+                {icon}
+                <Typography
+                  variant="body2"
+                  title={text}
+                  sx={{
+                    ...textOverflow(),
+                    fontWeight: value === selectedValue ? "bold" : "normal",
+                  }}
+                >
+                  {text}
+                </Typography>
+              </Stack>
+            </Stack>
+          ))}
+        </Stack>
       </Stack>
     </Stack>
   );
