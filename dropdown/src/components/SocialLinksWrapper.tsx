@@ -2,8 +2,11 @@ import { useTheme } from "@mui/material";
 import React, { CSSProperties, ReactElement } from "react";
 
 import FacebookSvg from "../assets/social-links/facebook.svg?react";
+import LinkedInSvg from "../assets/social-links/linkedin.svg?react";
 import RedditSvg from "../assets/social-links/reddit.svg?react";
 import TelegramSvg from "../assets/social-links/telegram.svg?react";
+import TiktokSvg from "../assets/social-links/tiktok.svg?react";
+import TwitchSvg from "../assets/social-links/twitch.svg?react";
 import WhatsappSvg from "../assets/social-links/whatsapp.svg?react";
 import YoutubeSvg from "../assets/social-links/youtube.svg?react";
 import { SocialIcons } from "../models/iconsEnums.ts";
@@ -26,6 +29,9 @@ export const SocialLinksWrapper = (props: SocialLinksWrapperProps): ReactElement
     [SocialIcons.REDDIT, <RedditSvg key={SocialIcons.REDDIT} />],
     [SocialIcons.YOUTUBE, <YoutubeSvg key={SocialIcons.YOUTUBE} />],
     [SocialIcons.WHATSAPP, <WhatsappSvg key={SocialIcons.WHATSAPP} />],
+    [SocialIcons.TIKTOK, <TiktokSvg key={SocialIcons.TIKTOK} />],
+    [SocialIcons.LINKEDIN, <LinkedInSvg key={SocialIcons.LINKEDIN} />],
+    [SocialIcons.TWITCH, <TwitchSvg key={SocialIcons.TWITCH} />],
   ]);
 
   const pxToRemTypeConverter = (value?: string | number): string | undefined => {

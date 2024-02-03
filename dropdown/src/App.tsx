@@ -10,28 +10,43 @@ export const App = (): ReactElement => {
   const OPTIONS: DropdownProps["options"] = [
     {
       value: SocialIcons.YOUTUBE,
-      text: "Youtube",
+      text: SocialIcons.YOUTUBE,
       icon: <SocialLinksWrapper type={SocialIcons.YOUTUBE} />,
     },
     {
       value: SocialIcons.TELEGRAM,
-      text: "Telegram",
+      text: SocialIcons.TELEGRAM,
       icon: <SocialLinksWrapper type={SocialIcons.TELEGRAM} />,
     },
     {
       value: SocialIcons.REDDIT,
-      text: "Reddit",
+      text: SocialIcons.REDDIT,
       icon: <SocialLinksWrapper type={SocialIcons.REDDIT} />,
     },
     {
       value: SocialIcons.FACEBOOK,
-      text: "Facebook",
+      text: SocialIcons.FACEBOOK,
       icon: <SocialLinksWrapper type={SocialIcons.FACEBOOK} />,
     },
     {
       value: SocialIcons.WHATSAPP,
-      text: "Whatsapp",
+      text: SocialIcons.WHATSAPP,
       icon: <SocialLinksWrapper type={SocialIcons.WHATSAPP} />,
+    },
+    {
+      value: SocialIcons.LINKEDIN,
+      text: SocialIcons.LINKEDIN,
+      icon: <SocialLinksWrapper type={SocialIcons.LINKEDIN} />,
+    },
+    {
+      value: SocialIcons.TWITCH,
+      text: SocialIcons.TWITCH,
+      icon: <SocialLinksWrapper type={SocialIcons.TWITCH} />,
+    },
+    {
+      value: SocialIcons.TIKTOK,
+      text: SocialIcons.TIKTOK,
+      icon: <SocialLinksWrapper type={SocialIcons.TIKTOK} />,
     },
   ];
 

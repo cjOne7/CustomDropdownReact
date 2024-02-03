@@ -26,7 +26,7 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
   const { pxToRem } = theme.typography;
   const { options, value, onValueChange, mainPlaceholder, ...stackProps } = props;
   const { sx, ...otherStackProps } = stackProps;
-  const [isMenuShown, setIsMenuShown] = useState<boolean>(true);
+  const [isMenuShown, setIsMenuShown] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<DropdownProps["value"]>(value);
 
   const handleMenuClick = (e: React.MouseEvent<HTMLDivElement>): void => {
@@ -80,8 +80,6 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
         position: "relative",
         width: "100%",
         alignItems: "center",
-        borderRadius: `${BORDER_ROUND_RADIUS} ${BORDER_ROUND_RADIUS} ${isMenuShown ? 0 : BORDER_ROUND_RADIUS} ${isMenuShown ? 0 : BORDER_ROUND_RADIUS}`,
-        background: "linear-gradient(90deg, #f0a3f6 0%, #8ab2f6 50%, #8fd3f4 100%)",
         ...sx,
       }}
       {...otherStackProps}
@@ -92,10 +90,11 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
           alignItems: "center",
           justifyContent: "space-between",
           overflow: "hidden",
-          borderRadius: BORDER_ROUND_RADIUS,
+          borderRadius: `${BORDER_ROUND_RADIUS} ${BORDER_ROUND_RADIUS} ${isMenuShown ? 0 : BORDER_ROUND_RADIUS} ${isMenuShown ? 0 : BORDER_ROUND_RADIUS}`,
           p: `${pxToRem(10)} ${pxToRem(15)}`,
           width: "inherit",
           color: "#fff",
+          background: "linear-gradient(90deg, #f0a3f6 0%, #8ab2f6 50%, #8fd3f4 100%)",
           "&:hover": {
             cursor: "pointer",
             color: "#e1faff",
@@ -138,9 +137,10 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
         sx={{
           width: "inherit",
           position: "absolute",
-          top: "calc(100%)",
+          top: "100%",
           background: "linear-gradient(90deg, #f0a3f6 0%, #8ab2f6 50%, #8fd3f4 100%)",
           borderRadius: `0 0 ${BORDER_ROUND_RADIUS} ${BORDER_ROUND_RADIUS}`,
+          visibility: isMenuShown ? "visible" : "hidden",
         }}
       >
         <Stack
@@ -148,7 +148,6 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
             width: "inherit",
             alignItems: "center",
             justifyContent: "center",
-            display: isMenuShown ? "block" : "none",
             p: pxToRem(12),
             pt: 0,
           }}
@@ -158,6 +157,7 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
             <Stack
               key={value}
               sx={{
+                width: "inherit",
                 borderRadius: BORDER_ROUND_RADIUS,
                 p: `${pxToRem(10)} ${pxToRem(15)}`,
                 bgcolor: value === selectedValue ? "#b6f3ff" : "#fff",

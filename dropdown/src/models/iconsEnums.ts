@@ -4,4 +4,7 @@ export enum SocialIcons {
   REDDIT = "Reddit",
   FACEBOOK = "Facebook",
   WHATSAPP = "Whatsapp",
+  LINKEDIN = "LinkedIn",
+  TWITCH = "Twitch",
+  TIKTOK = "Tiktok",
 }
