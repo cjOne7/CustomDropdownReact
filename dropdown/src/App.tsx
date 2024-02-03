@@ -1,3 +1,4 @@
+import { Stack } from "@mui/material";
 import { ReactElement, useState } from "react";
 
 import { Dropdown, DropdownProps } from "./dropdown/Dropdown.tsx";
@@ -25,6 +26,18 @@ export const App = (): ReactElement => {
       value: "5",
       text: "5",
     },
+    {
+      value: "6",
+      text: "6",
+    },
+    {
+      value: "7",
+      text: "7",
+    },
+    {
+      value: "8",
+      text: "8",
+    },
   ];
 
   const handleValueChange = (value: DropdownProps["value"]): void => {
@@ -32,14 +45,20 @@ export const App = (): ReactElement => {
   };
 
   return (
-    <Dropdown
-      mainPlaceholder="Toooojjjjjjjjjjjjjjaaaaaa long text"
-      options={OPTIONS}
-      value={dropdownValue}
-      onValueChange={handleValueChange}
+    <Stack
       sx={{
-        maxWidth: "250px",
+        p: "20px",
       }}
-    />
+    >
+      <Dropdown
+        mainPlaceholder="Toooooooooooooooo long text"
+        options={OPTIONS}
+        value={dropdownValue}
+        onValueChange={handleValueChange}
+        sx={{
+          maxWidth: "250px",
+        }}
+      />
+    </Stack>
   );
 };

@@ -47,9 +47,11 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
       sx={{
         position: "relative",
         width: "100%",
+        alignItems: "center",
+        borderRadius: "25px",
+        background: "linear-gradient(90deg, rgba(108,242,158,1) 0%, rgba(143,211,244,1) 100%)",
         ...sx,
       }}
-      spacing="10px"
       {...otherStackProps}
     >
       <Stack
@@ -58,15 +60,12 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
           alignItems: "center",
           justifyContent: "space-between",
           overflow: "hidden",
-          border: "1px solid black",
-          borderRadius: "8px",
+          borderRadius: "25px",
           p: "10px 15px",
-          bgcolor: "darkblue",
           width: "inherit",
-          color: isMenuShown ? "white" : "#b8becc",
+          color: isMenuShown ? "#7dabf5" : "#f1f2f2",
           "&:hover": {
             cursor: "pointer",
-            bgcolor: "darkblue",
             color: "white",
           },
         }}
@@ -92,6 +91,7 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
             variant="body1"
             title={mainPlaceholder}
             sx={{
+              fontWeight: "bold",
               color: "inherit",
               ...textOverflow(),
             }}
@@ -105,23 +105,26 @@ export const Dropdown = (props: DropdownProps & StackProps): ReactElement => {
       <Stack
         sx={{
           width: "inherit",
+          alignItems: "center",
+          justifyContent: "center",
           display: isMenuShown ? "block" : "none",
+          borderRadius: "25px",
+          p: "12px",
+          pt: 0,
         }}
+        spacing="5px"
       >
         {options.map((option) => (
           <Stack
             key={option.value}
             sx={{
-              width: "inherit",
-              borderRadius: "8px",
+              // width: "inherit",
+              borderRadius: "25px",
               p: "10px 15px",
-              bgcolor: "lightgray",
-              border: "1px solid black",
+              bgcolor: "white",
               borderTop: "none",
               cursor: "pointer",
-              "&:first-of-type": {
-                borderTop: "1px solid black",
-              },
+              boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.64)",
             }}
             onClick={() => {
               onValueChange(option.value);
