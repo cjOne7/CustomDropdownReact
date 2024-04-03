@@ -32,7 +32,7 @@
     "eslint-plugin-react-refresh": "0.4.5",
     "prettier": "npm:@btmills/prettier@3.2.0",
     "typescript": "5.2.2",
-    "vite": "5.0.12"
+    "vite": "5.0.13"
   },
   "prettier": {
     "printWidth": 100
